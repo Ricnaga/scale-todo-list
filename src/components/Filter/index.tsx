@@ -9,35 +9,20 @@ export default function Filter({
   return (
     <FilterContainer>
       <Button
-        active={filter === "all"}
-        onClick={() =>
-          setFilter(() => {
-            localStorage.setItem("filter", "all");
-            return "all";
-          })
-        }
+        active={filter === "all" ? "true" : "false"}
+        onClick={() => setFilter("all")}
       >
         Todos
       </Button>
       <Button
-        active={filter === "completed"}
-        onClick={() =>
-          setFilter(() => {
-            localStorage.setItem("filter", "completed");
-            return "completed";
-          })
-        }
+        active={filter === "completed" ? "true" : "false"}
+        onClick={() => setFilter("completed")}
       >
         Completo
       </Button>
       <Button
-        active={filter === "incomplete"}
-        onClick={() =>
-          setFilter(() => {
-            localStorage.setItem("filter", "incomplete");
-            return "incomplete";
-          })
-        }
+        active={filter === "incomplete" ? "true" : "false"}
+        onClick={() => setFilter("incomplete")}
       >
         Incompleto
       </Button>

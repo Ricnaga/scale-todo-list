@@ -15,8 +15,9 @@ export const Item = styled.div`
 `;
 
 export const Title = styled.span<ITodoItemStyleProps>`
-  text-decoration: ${(props) => (props.completed ? "line-through" : "none")};
-  color: ${(props) => (props.completed ? "#6c757d" : "#212529")};
+  text-decoration: ${(props) =>
+    props.completed === "true" ? "line-through" : "none"};
+  color: ${(props) => (props.completed === "true" ? "#6c757d" : "#212529")};
 `;
 
 export const Buttons = styled.div`
@@ -27,9 +28,9 @@ export const Buttons = styled.div`
 export const Button = styled.button<ITodoItemStyleProps>`
   padding: 5px;
   background: ${(props) => {
-    if (props.delete) return "rgba(255, 0, 0, 0.75)";
+    if (props.delete === "false") return "rgba(255, 0, 0, 0.75)";
 
-    if (!props.completed) return "rgba(0, 193, 0, 0.75)";
+    if (props.completed === "false") return "rgba(0, 193, 0, 0.75)";
     return "rgba(255, 193, 7, 0.75)";
   }};
   color: white;
@@ -39,14 +40,12 @@ export const Button = styled.button<ITodoItemStyleProps>`
   backdrop-filter: blur(5px);
 
   &:hover {
-    background: ${
-      (props) => {
-        if (props.delete) return "rgba(150, 0, 0, 0.75)";
-    
-        if (!props.completed) return "rgba(0, 100, 0, 0.75)";
-        return "rgba(255, 193, 7, 1)";
-      }
-      };
+    background: ${(props) => {
+      if (props.delete === "false") return "rgba(150, 0, 0, 0.75)";
+
+      if (props.completed === "false") return "rgba(0, 100, 0, 0.75)";
+      return "rgba(255, 193, 7, 1)";
+    }};
   }
 `;
 

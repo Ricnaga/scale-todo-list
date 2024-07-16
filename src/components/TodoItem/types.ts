@@ -8,6 +8,6 @@ export interface ITodoItemProps {
 }
 
 export interface ITodoItemStyleProps {
-	completed?: boolean;
-	delete?: boolean;
+	completed?: string;
+	delete?: string;
 }

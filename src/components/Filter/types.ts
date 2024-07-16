@@ -7,5 +7,5 @@ export interface IFilterProps {
 }
 
 export interface IFilterStyleProps {
-	active?: boolean;
+	active?: string;
 }

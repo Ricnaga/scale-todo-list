@@ -6,10 +6,29 @@ import { Filter, TodoForm, TodoList } from "./components";
 
 import { Container, GlobalStyle } from "./styles";
 
+const getTodosFromStorage = (): Array<ITodo> => {
+  const storedTodos = localStorage.getItem("todos");
+
+  return storedTodos ? JSON.parse(storedTodos || "") : [];
+};
+
+const getFilterFromStorage = (): FilterType => {
+  const storedFilter = localStorage.getItem("filter");
+  return storedFilter ? JSON.parse(storedFilter) : "all";
+};
+
 export default function App() {
-  const [filter, setFilter] = useState<FilterType>("all");
-  const [todos, setTodos] = useState<Array<ITodo>>([]);
-  const [filteredTodos, setFilteredTodos] = useState<Array<ITodo>>(todos);
+  const [filter, setFilter] = useState<FilterType>(() =>
+    getFilterFromStorage()
+  );
+  const [todos, setTodos] = useState<Array<ITodo>>(() => getTodosFromStorage());
+
+  const filteredTodos = todos.filter((todo) => {
+    if (filter === "completed") return todo.completed;
+    if (filter === "incomplete") return !todo.completed;
+    if (filter === "all") return todo;
+    return false;
+  });
 
   function addTodo(title: string, description: string): void {
     setTodos((state) => {
@@ -21,79 +40,52 @@ export default function App() {
         ...todos,
         { id: Date.now(), title, description, completed: false },
       ];
-      localStorage.setItem("todos", JSON.stringify(addedTodos));
 
       return addedTodos;
     });
   }
 
   function toggleComplete(id: number) {
-    const completedTodos = todos.map((todo) =>
-      todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
     );
-
-    localStorage.setItem("todos", JSON.stringify(completedTodos));
-
-    setTodos(completedTodos);
   }
 
   function removeTodo(id: number) {
-    const deletedTodos = todos.filter((todo) => todo.id !== id);
-
-    localStorage.setItem("todos", JSON.stringify(deletedTodos));
-
-    setTodos(deletedTodos);
+    setTodos(todos.filter((todo) => todo.id !== id));
   }
 
   function editTodo(id: number, newTitle: string, newDescription?: string) {
-    const updatedTodo = todos.map((todo) => {
-      if (todo.id === id) {
-        return { ...todo, title: newTitle, description: newDescription };
-      }
-
-      return todo;
-    });
-
-    localStorage.setItem("todos", JSON.stringify(updatedTodo));
-
-    setTodos(updatedTodo);
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id
+          ? { ...todo, title: newTitle, description: newDescription }
+          : todo
+      )
+    );
   }
 
   function sortByTitle() {
-    const sortedTodos = todos.sort((a, b) => {
-      if (a.title < b.title) return -1;
-      if (a.title > b.title) return 0;
-      return 1;
-    });
-
-    localStorage.setItem("todos", JSON.stringify(sortedTodos));
-
-    setTodos(sortedTodos);
+    setTodos((state) =>
+      state
+        .sort((a, b) => {
+          if (a.title < b.title) return -1;
+          if (a.title > b.title) return 0;
+          return 1;
+        })
+        .map((items) => items)
+    );
   }
 
   useEffect(() => {
-    const storedTodos = localStorage.getItem("todos")
-      ? JSON.parse(localStorage.getItem("todos") || "")
-      : [];
-    setTodos(storedTodos);
-
-    const storedFilter = localStorage
-      .getItem("filter")
-      ?.toString() as FilterType;
-
-    setFilter(storedFilter);
-  }, []);
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   useEffect(() => {
-    setFilteredTodos(
-      todos.filter((todo) => {
-        if (filter === "completed") return todo.completed;
-        if (filter === "incomplete") return !todo.completed;
-        if (filter === "all") return todo;
-        return false;
-      })
-    );
-  }, [todos, filteredTodos]);
+    localStorage.setItem("filter", JSON.stringify(filter));
+  }, [filter]);
 
   return (
     <Container>

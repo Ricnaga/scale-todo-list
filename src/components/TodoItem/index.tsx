@@ -46,13 +46,18 @@ export default function TodoItem({
         </EditFormContainer>
       ) : (
         <>
-          <Title completed={todo.completed}>{todo.title}</Title>
+          <Title completed={todo.completed ? "true" : "false"}>
+            {todo.title}
+          </Title>
           <Buttons>
             <Button onClick={handleEdit}>Editar</Button>
-            <Button completed={todo.completed} onClick={() => toggleComplete(todo.id)}>
+            <Button
+              completed={todo.completed ? "true" : "false"}
+              onClick={() => toggleComplete(todo.id)}
+            >
               {todo.completed ? "Desfazer" : "Completar"}
             </Button>
-            <Button delete onClick={() => removeTodo(todo.id)}>
+            <Button delete="false" onClick={() => removeTodo(todo.id)}>
               Deletar
             </Button>
           </Buttons>
