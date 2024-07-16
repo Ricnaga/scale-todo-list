@@ -13,7 +13,7 @@
 
 </div>
 
-<img src="https://img.shields.io/github/license/Ricnaga/scale-todo-list?&style=for-the-badge"/>
+<img src="https://img.shields.io/github/license/Ricnaga/scale-todo-list"/>
 
 ### <div align="center"> Aplicação em Reactjs/Typescript, abordando conceitos sobre: </div>
 
