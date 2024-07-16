@@ -1,11 +1,11 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { ITodoItemStyleProps } from "./types";
 
 export const Item = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(255, 255, 255, 0.15);
+  background: ${(props) => props.theme.white};
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 8px;
@@ -15,9 +15,10 @@ export const Item = styled.div`
 `;
 
 export const Title = styled.span<ITodoItemStyleProps>`
-  text-decoration: ${(props) =>
-    props.completed === "true" ? "line-through" : "none"};
-  color: ${(props) => (props.completed === "true" ? "#6c757d" : "#212529")};
+  ${({ theme, completed }) => css`
+    text-decoration: ${completed === "true" ? "line-through" : "none"};
+    color: ${completed === "true" ? theme.gray300 : theme.gray400};
+  `}
 `;
 
 export const Buttons = styled.div`
@@ -26,12 +27,16 @@ export const Buttons = styled.div`
 `;
 
 export const Button = styled.button<ITodoItemStyleProps>`
+  transition: all;
+  transition-duration: 0.1s;
+  transition-timing-function: ease;
+
   padding: 5px;
   background: ${(props) => {
-    if (props.delete === "false") return "rgba(255, 0, 0, 0.75)";
+    if (props.delete === "false") return props.theme.red500;
 
-    if (props.completed === "false") return "rgba(0, 193, 0, 0.75)";
-    return "rgba(255, 193, 7, 0.75)";
+    if (props.completed === "false") return props.theme.green300;
+    return props.theme.yellow400;
   }};
   color: white;
   border: none;
@@ -41,10 +46,10 @@ export const Button = styled.button<ITodoItemStyleProps>`
 
   &:hover {
     background: ${(props) => {
-      if (props.delete === "false") return "rgba(150, 0, 0, 0.75)";
+      if (props.delete === "false") return props.theme.red400;
 
-      if (props.completed === "false") return "rgba(0, 100, 0, 0.75)";
-      return "rgba(255, 193, 7, 1)";
+      if (props.completed === "false") return props.theme.green400;
+      return props.theme.yellow500;
     }};
   }
 `;

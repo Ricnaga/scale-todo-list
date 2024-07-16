@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-import { ITodo } from "./global/types/todo.types";
-import { FilterType } from "./global/types/filter.types";
 import { Filter, TodoForm, TodoList } from "./components";
+import { FilterType } from "./global/types/filter.types";
+import { ITodo } from "./global/types/todo.types";
 
-import { Container, GlobalStyle } from "./styles";
+import { StyledComponentProvider } from "./contexts/StyledComponent";
 
 const getTodosFromStorage = (): Array<ITodo> => {
   const storedTodos = localStorage.getItem("todos");
@@ -88,8 +88,7 @@ export default function App() {
   }, [filter]);
 
   return (
-    <Container>
-      <GlobalStyle />
+    <StyledComponentProvider>
       <h1>Todo List</h1>
       <TodoForm addTodo={addTodo} />
       <Filter filter={filter} setFilter={setFilter} sortByTitle={sortByTitle} />
@@ -99,6 +98,6 @@ export default function App() {
         removeTodo={removeTodo}
         editTodo={editTodo}
       />
-    </Container>
+    </StyledComponentProvider>
   );
 }
