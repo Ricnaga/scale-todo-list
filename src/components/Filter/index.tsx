@@ -2,26 +2,26 @@ import { FilterAction } from "../../global/types/filter.types";
 import { Button, FilterContainer } from "./styles";
 import { IFilterProps } from "./types";
 
+const buttonDescription = [
+  {
+    children: "Todos",
+    active: FilterAction.all,
+  },
+  {
+    children: "Completo",
+    active: FilterAction.completed,
+  },
+  {
+    children: "Incompleto",
+    active: FilterAction.incomplete,
+  },
+];
+
 export default function Filter({
   filter,
   setFilter,
   sortByTitle,
 }: IFilterProps) {
-  const buttonDescription = [
-    {
-      children: "Todos",
-      active: FilterAction.all,
-    },
-    {
-      children: "Completo",
-      active: FilterAction.completed,
-    },
-    {
-      children: "Incompleto",
-      active: FilterAction.incomplete,
-    },
-  ];
-
   return (
     <FilterContainer>
       {buttonDescription.map((button) => (
