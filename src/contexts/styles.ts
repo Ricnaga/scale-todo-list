@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle, css } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
 	* {
@@ -30,7 +30,7 @@ export const GlobalStyle = createGlobalStyle`
 
 		color-scheme: light dark;
 		background-color: #f8f9fa;
-    	color: #212529;
+    color: #212529;
 
 		font-synthesis: none;
 		text-rendering: optimizeLegibility;
@@ -40,16 +40,18 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 export const Container = styled.div`
-  width: 600px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  ${({ theme }) => css`
+    width: 600px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 16px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    background: ${theme.colors.white};
+    border-radius: ${theme.radii.lg};
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  `}
 `;

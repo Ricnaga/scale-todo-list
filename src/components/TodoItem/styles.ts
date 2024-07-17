@@ -2,22 +2,26 @@ import styled, { css } from "styled-components";
 import { ITodoItemStyleProps } from "./types";
 
 export const Item = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: ${(props) => props.theme.white};
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  ${({ theme }) => css`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: ${theme.colors.white};
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: ${theme.radii.md};
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  `}
 `;
 
 export const Title = styled.span<ITodoItemStyleProps>`
   ${({ theme, completed }) => css`
     text-decoration: ${completed === "true" ? "line-through" : "none"};
-    color: ${completed === "true" ? theme.gray300 : theme.gray400};
+    color: ${completed === "true"
+      ? theme.colors.gray300
+      : theme.colors.gray400};
   `}
 `;
 
@@ -33,23 +37,23 @@ export const Button = styled.button<ITodoItemStyleProps>`
 
   padding: 5px;
   background: ${(props) => {
-    if (props.delete === "false") return props.theme.red500;
+    if (props.delete === "false") return props.theme.colors.red500;
 
-    if (props.completed === "false") return props.theme.green300;
-    return props.theme.yellow400;
+    if (props.completed === "false") return props.theme.colors.green300;
+    return props.theme.colors.yellow400;
   }};
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: ${(props) => props.theme.radii.sm};
   cursor: pointer;
   backdrop-filter: blur(5px);
 
   &:hover {
     background: ${(props) => {
-      if (props.delete === "false") return props.theme.red400;
+      if (props.delete === "false") return props.theme.colors.red400;
 
-      if (props.completed === "false") return props.theme.green400;
-      return props.theme.yellow500;
+      if (props.completed === "false") return props.theme.colors.green400;
+      return props.theme.colors.yellow500;
     }};
   }
 `;
@@ -66,13 +70,13 @@ export const EditFormContainer = styled.div`
 export const Input = styled.input`
   padding: 5px;
   border: none;
-  border-radius: 4px;
+  border-radius: ${props => props.theme.radii.sm};
   background: rgba(255, 255, 255, 0.25);
   color: #212529;
   backdrop-filter: blur(5px);
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 
   &::placeholder {
-    color: #6c757d;
+    color: ${props => props.theme.colors.gray300}
   }
 `;

@@ -12,14 +12,14 @@ export const Input = styled.input`
     padding: 10px;
     margin-bottom: 10px;
     border: none;
-    border-radius: 4px;
-    background: ${theme.white100};
-    color: ${theme.gray400};
+    border-radius: ${theme.radii.sm};
+    background: ${theme.colors.white100};
+    color: ${theme.colors.gray400};
     backdrop-filter: blur(5px);
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 
     &::placeholder {
-      color: ${theme.gray300};
+      color: ${theme.colors.gray300};
     }
   `}
 `;
@@ -31,15 +31,15 @@ export const Button = styled.button`
     transition-timing-function: ease;
 
     padding: 10px;
-    background-color: ${theme.green100};
+    background-color: ${theme.colors.green100};
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: ${theme.radii.sm};
     cursor: pointer;
     backdrop-filter: blur(5px);
 
     &:hover {
-      background-color: ${theme.green200};
+      background-color: ${theme.colors.green200};
     }
   `}
 `;

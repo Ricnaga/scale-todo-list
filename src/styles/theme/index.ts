@@ -1,4 +1,4 @@
-export const theme = {
+const colors = {
   white: "rgba(255, 255, 255, 0.15)",
   white100: "rgba(255, 255, 255, 0.25)",
 
@@ -20,4 +20,15 @@ export const theme = {
 
   yellow400: "rgba(255, 193, 7, 0.75)",
   yellow500: "rgba(255, 193, 7, 1)",
+};
+
+const radii = {
+  sm: "4px",
+  md: "8px",
+  lg: "16px",
+};
+
+export const theme = {
+  colors,
+  radii,
 };
