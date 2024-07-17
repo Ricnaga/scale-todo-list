@@ -1,3 +1,4 @@
+import { FilterAction } from "../../global/types/filter.types";
 import { Button, FilterContainer } from "./styles";
 import { IFilterProps } from "./types";
 
@@ -6,26 +7,32 @@ export default function Filter({
   setFilter,
   sortByTitle,
 }: IFilterProps) {
+  const buttonDescription = [
+    {
+      children: "Todos",
+      active: FilterAction.all,
+    },
+    {
+      children: "Completo",
+      active: FilterAction.completed,
+    },
+    {
+      children: "Incompleto",
+      active: FilterAction.incomplete,
+    },
+  ];
+
   return (
     <FilterContainer>
-      <Button
-        active={filter === "all" ? "true" : "false"}
-        onClick={() => setFilter("all")}
-      >
-        Todos
-      </Button>
-      <Button
-        active={filter === "completed" ? "true" : "false"}
-        onClick={() => setFilter("completed")}
-      >
-        Completo
-      </Button>
-      <Button
-        active={filter === "incomplete" ? "true" : "false"}
-        onClick={() => setFilter("incomplete")}
-      >
-        Incompleto
-      </Button>
+      {buttonDescription.map((button) => (
+        <Button
+          key={button.children}
+          active={FilterAction[button.active] === filter ? "true" : "false"}
+          onClick={() => setFilter(FilterAction[button.active])}
+        >
+          {button.children}
+        </Button>
+      ))}
       <Button onClick={sortByTitle}>Ordenar por título</Button>
     </FilterContainer>
   );
