@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
 
 import { Filter, TodoForm, TodoList } from "./components";
-import { FilterType } from "./global/types/filter.types";
-import { ITodo } from "./global/types/todo.types";
+import { FilterAction, FilterType } from "./global/types/filter.types";
+import { IEditTodo, ITodo } from "./global/types/todo.types";
 
 import { StyledComponentProvider } from "./contexts/StyledComponent";
 
+const TODOS = "todos";
+const FILTER = "filter";
+
 const getTodosFromStorage = (): Array<ITodo> => {
-  const storedTodos = localStorage.getItem("todos");
+  const storedTodos = localStorage.getItem(TODOS);
 
   return storedTodos ? JSON.parse(storedTodos || "") : [];
 };
 
 const getFilterFromStorage = (): FilterType => {
-  const storedFilter = localStorage.getItem("filter");
+  const storedFilter = localStorage.getItem(FILTER);
   return storedFilter ? JSON.parse(storedFilter) : "all";
 };
 
@@ -24,10 +27,19 @@ export default function App() {
   const [todos, setTodos] = useState<Array<ITodo>>(() => getTodosFromStorage());
 
   const filteredTodos = todos.filter((todo) => {
-    if (filter === "completed") return todo.completed;
-    if (filter === "incomplete") return !todo.completed;
-    if (filter === "all") return todo;
-    return false;
+    switch (filter) {
+      case FilterAction.completed:
+        return todo.completed;
+
+      case FilterAction.incomplete:
+        return !todo.completed;
+
+      case FilterAction.all:
+        return todo;
+
+      default:
+        return false;
+    }
   });
 
   function addTodo(title: string, description: string): void {
@@ -57,7 +69,7 @@ export default function App() {
     setTodos(todos.filter((todo) => todo.id !== id));
   }
 
-  function editTodo(id: number, newTitle: string, newDescription?: string) {
+  function editTodo({ id, newTitle, newDescription }: IEditTodo) {
     setTodos(
       todos.map((todo) =>
         todo.id === id
@@ -80,11 +92,11 @@ export default function App() {
   }
 
   useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
+    localStorage.setItem(TODOS, JSON.stringify(todos));
   }, [todos]);
 
   useEffect(() => {
-    localStorage.setItem("filter", JSON.stringify(filter));
+    localStorage.setItem(FILTER, JSON.stringify(filter));
   }, [filter]);
 
   return (

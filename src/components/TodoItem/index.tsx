@@ -24,7 +24,7 @@ export default function TodoItem({
   }
 
   function handleSave() {
-    editTodo(todo.id, newTitle, newDescription);
+    editTodo({ id: todo.id, newTitle, newDescription });
     setIsEditing(false);
   }
 
